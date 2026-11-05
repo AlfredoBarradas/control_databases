@@ -30,10 +30,38 @@ BATCH_SIZE = 1000
 # ============================================================
 
 def connect_supabase():
-    if not SUPABASE_URL or not SUPABASE_KEY:
-        raise ValueError("Missing Supabase credentials.")
+    supabase_url = os.getenv("SUPABASE_URL")
+    supabase_key = os.getenv("SUPABASE_KEY")
+    email = os.getenv("SUPABASE_USER_EMAIL")
+    password = os.getenv("SUPABASE_USER_PASSWORD")
 
-    return create_client(SUPABASE_URL, SUPABASE_KEY)
+    if supabase_url is None:
+        raise ValueError("Missing SUPABASE_URL.")
+
+    if supabase_key is None:
+        raise ValueError("Missing SUPABASE_KEY.")
+
+    if email is None:
+        raise ValueError("Missing SUPABASE_USER_EMAIL.")
+
+    if password is None:
+        raise ValueError("Missing SUPABASE_USER_PASSWORD.")
+
+    supabase = create_client(supabase_url, supabase_key)
+
+    response = supabase.auth.sign_in_with_password(
+        {
+            "email": email,
+            "password": password,
+        }
+    )
+
+    if response.user is None:
+        raise RuntimeError("Supabase authentication failed.")
+
+    print(f"Authenticated as: {response.user.email}")
+
+    return supabase
 
 
 # ============================================================
