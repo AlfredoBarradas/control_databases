@@ -1,0 +1,17 @@
+@"
+# Environment
+.env
+.env.*
+
+# Excel
+*.xlsx
+*.xls
+
+# Batch
+*.bat
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+"@ | Set-Content -Encoding utf8 .gitignore
