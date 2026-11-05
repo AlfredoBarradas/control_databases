@@ -17,7 +17,7 @@ load_dotenv()
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
-TABLE_NAME = "your_table_name"
+TABLE_NAME = "part_numbers"
 
 EXCEL_FILE = Path("Control db_BOM.xlsx")
 SHEET_NAME = "Part_Numbers"
